@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="text-align: center;">cart</h2>
+{% if not items %}
+  <p>cart is empty.</p>
+{% else %}
+  <ul>
+  {% for it in items %}
+    <li style="margin-bottom:10px">
+      <img src="{{ it['image'] }}" style="width:120px; display:inline-block; vertical-align:middle;">
+      <div style="display:inline-block; margin-left:10px; vertical-align:middle;">
+        <strong>{{ it['name'] }}</strong><br>
+        {{ it['description'] }}<br>
+        quantity: {{ it['qty'] }} — price: {{ "%.2f"|format(it['price']) }} €
+        <form method="post" action="{{ url_for('remove_from_cart') }}">
+          <input type="hidden" name="cid" value="{{ it['cid'] }}">
+          <button type="submit">delete</button>
+        </form>
+      </div>
+    </li>
+  {% endfor %}
+  </ul>
+  <p><strong>total: {{ "%.2f"|format(total) }} €</strong></p>
+{% endif %}
+{% endblock %}

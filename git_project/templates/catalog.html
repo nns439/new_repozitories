@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="text-align: center;">catalog</h2>
+
+{% for cat, items in cats.items() %}
+  <h3 id="{{ cat }}">{{ cat.capitalize() }}</h3>
+  {% for p in items %}
+    <div class="card">
+      <img src="{{ p['image'] }}" alt="{{ p['name'] }}">
+      <h4>{{ p['name'] }}</h4>
+      <div class="small">{{ p['description'] }}</div>
+      <div><strong>{{ "%.2f"|format(p['price']) }} €</strong></div>
+      <form action="{{ url_for('add_to_cart') }}" method="post">
+        <input type="hidden" name="product_id" value="{{ p['id'] }}">
+        <button type="submit">add to cart</button>
+      </form>
+    </div>
+  {% endfor %}
+{% endfor %}
+
+{% endblock %}

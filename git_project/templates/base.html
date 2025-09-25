@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>avant les retrouvailles</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:20px; }
+    nav ul { list-style:none; padding:0; display:flex; gap:10px; }
+    nav a { text-decoration:none; padding:6px 10px; border:1px solid #c1bfbf; border-radius:4px; }
+    .card { border:1px solid #d3d1d1; padding:10px; width:280px; display:inline-block; vertical-align:top; margin:10px; }
+    img { max-width:100%; height:auto; display:block; }
+    .small { font-size:0.9em; color:#545252; }
+  </style>
+</head>
+<body>
+  <nav> 
+    <ul>
+      <li><a href="{{ url_for('index') }}">main page</a></li>
+      <li><a href="{{ url_for('catalog') }}">catalog</a></li>
+      <li><a href="{{ url_for('catalog') }}#платья">dresses</a></li>
+      <li><a href="{{ url_for('catalog') }}#комплекты">sets</a></li>
+      <li><a href="{{ url_for('catalog') }}#юбки">skirts</a></li>
+      <li><a href="{{ url_for('catalog') }}#аксессуары">accessories</a></li>
+      <li><a href="{{ url_for('about') }}">about us</a></li>
+      <li><a href="{{ url_for('contacts') }}">contacts</a></li>
+      <li><a href="{{ url_for('cart') }}">cart</a></li>
+      {% if session.get('username') %}
+        <li class="small">hello !, {{ session.username }} (<a href="{{ url_for('logout') }}">log out</a>)</li>
+      {% else %}
+        <li><a href="{{ url_for('login') }}">log in</a></li>
+        <li><a href="{{ url_for('register') }}">sign up</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <form action="{{ url_for('search') }}" method="get" style="margin-top:10px;">
+    <input type="text" name="q" placeholder="search" required>
+    <button type="submit">search</button>
+  </form>
+  <hr>
+  {% block content %}{% endblock %}
+</body>
+</html>
